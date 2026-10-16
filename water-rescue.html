@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Мониторинг и спасение на воде — ОСВОД</title>
+<meta name="description" content="Автономные системы мониторинга и спасения на воде: USV-патрули, спасательные роботы, AI-распознавание, круглосуточная охрана акватории порта.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#023E8A;--blue:#0077B6;--cyan:#00B4D8;--light:#48CAE4;--orange:#FCA311;--bg:#F0F9FF;--dark:#0A2540;--grey:#6B7A8F;--line:#E5EDF5;--shadow:0 4px 24px rgba(2,62,138,.08);--shadow-lg:0 12px 48px rgba(2,62,138,.12);}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;scroll-padding-top:88px;}
+body{font-family:'Montserrat',Arial,sans-serif;font-size:16px;line-height:1.65;color:var(--dark);background:#fff;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}img,svg{display:block;max-width:100%;}
+.container{max-width:1200px;margin:0 auto;padding:0 32px;}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:100px;font-weight:600;font-size:15px;letter-spacing:.5px;border:none;cursor:pointer;font-family:inherit;transition:transform .2s,box-shadow .2s,background .2s;}
+.btn-primary{background:var(--blue);color:#fff;box-shadow:0 8px 24px rgba(0,119,182,.28);}
+.btn-primary:hover{background:var(--navy);transform:translateY(-2px);}
+.btn-outline{background:transparent;color:var(--navy);border:2px solid var(--navy);}
+.btn-outline:hover{background:var(--navy);color:#fff;}
+.btn-ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(8px);}
+.eyebrow{display:inline-block;font-size:12px;font-weight:700;letter-spacing:3px;color:var(--orange);text-transform:uppercase;margin-bottom:16px;}
+.section-title{font-size:clamp(28px,3.5vw,44px);font-weight:900;letter-spacing:-.5px;line-height:1.15;color:var(--navy);margin-bottom:16px;}
+.section-sub{font-size:17px;color:var(--grey);max-width:680px;margin-bottom:56px;}
+header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);transition:box-shadow .3s;}
+header.scrolled{box-shadow:0 4px 24px rgba(2,62,138,.08);}
+.header-inner{max-width:1200px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;gap:32px;}
+.logo{display:flex;align-items:center;gap:12px;font-weight:900;font-size:20px;letter-spacing:3px;color:var(--navy);white-space:nowrap;}
+.logo svg{width:36px;height:36px;}
+nav.main{display:flex;gap:28px;font-size:14px;font-weight:600;}
+nav.main a{color:var(--dark);transition:color .2s;position:relative;}
+nav.main a:hover,nav.main a.active{color:var(--blue);}
+nav.main a::after{content:'';position:absolute;bottom:-6px;left:0;right:0;height:2px;background:var(--orange);transform:scaleX(0);transition:transform .2s;transform-origin:left;}
+nav.main a:hover::after,nav.main a.active::after{transform:scaleX(1);}
+.header-cta{display:flex;align-items:center;gap:16px;}
+.header-phone{font-size:14px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:6px;}
+.burger{display:none;width:40px;height:40px;border:none;background:transparent;cursor:pointer;flex-direction:column;justify-content:center;gap:5px;}
+.burger span{width:22px;height:2px;background:var(--navy);}
+.breadcrumbs{margin-top:72px;padding:24px 0 0;font-size:13px;color:var(--grey);}
+.breadcrumbs-inner{max-width:1200px;margin:0 auto;padding:0 32px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.breadcrumbs a:hover{color:var(--blue);}
+.breadcrumbs .sep{opacity:.5;}
+.breadcrumbs .current{color:var(--navy);font-weight:600;}
+.dt-hero{position:relative;padding:60px 0 80px;background:linear-gradient(160deg,#F0F9FF 0%,#fff 60%);overflow:hidden;}
+.dt-hero::before{content:'';position:absolute;top:-100px;right:-100px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(0,180,216,.14),transparent 70%);}
+.dt-hero-inner{position:relative;max-width:1200px;margin:0 auto;padding:0 32px;display:grid;grid-template-columns:1.2fr 1fr;gap:72px;align-items:center;}
+.dt-hero h1{font-size:clamp(36px,4.8vw,60px);font-weight:900;letter-spacing:-.8px;line-height:1.05;color:var(--navy);margin-bottom:20px;}
+.dt-hero h1 .accent{background:linear-gradient(90deg,var(--blue),var(--cyan));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.dt-hero p.lead{font-size:18px;line-height:1.65;color:var(--grey);max-width:580px;margin-bottom:36px;}
+.dt-hero-cta{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:40px;}
+.dt-hero-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding-top:32px;border-top:1px solid var(--line);}
+.dt-hero-meta .item .num{font-size:28px;font-weight:900;color:var(--navy);letter-spacing:-1px;line-height:1;}
+.dt-hero-meta .item .num span{color:var(--orange);}
+.dt-hero-meta .item .label{font-size:12px;letter-spacing:1.5px;color:var(--grey);margin-top:6px;text-transform:uppercase;font-weight:600;}
+.dt-hero-visual{position:relative;aspect-ratio:1;border-radius:24px;background:linear-gradient(160deg,#0A2540 0%,#023E8A 60%,#0077B6 100%);overflow:hidden;box-shadow:var(--shadow-lg);}
+.dt-hero-visual::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 70% 30%,rgba(252,163,17,.22),transparent 55%),linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:auto,32px 32px,32px 32px;}
+.dt-hero-visual svg{position:relative;width:100%;height:100%;}
+section{padding:100px 0;}
+section.alt{background:var(--bg);}
+.whatis-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.whatis-content p{font-size:16px;color:var(--grey);line-height:1.75;margin-bottom:20px;}
+.whatis-points{display:grid;gap:16px;margin-top:32px;}
+.whatis-point{display:flex;gap:16px;padding:20px;background:#fff;border:1px solid var(--line);border-radius:14px;transition:border-color .2s,transform .2s;}
+.whatis-point:hover{border-color:var(--cyan);transform:translateX(4px);}
+.whatis-point .num{flex-shrink:0;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--blue),var(--cyan));color:#fff;font-weight:900;font-size:13px;}
+.whatis-point h4{font-size:15px;font-weight:800;color:var(--navy);margin-bottom:4px;}
+.whatis-point p{font-size:13px;color:var(--grey);margin:0;line-height:1.5;}
+/* Interactive demo */
+.demo-section{background:var(--dark);color:#fff;padding:80px 0 100px;position:relative;overflow:hidden;}
+.demo-section::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(0,180,216,.15),transparent 60%);}
+.demo-section .eyebrow{color:var(--orange);}
+.demo-section .section-title{color:#fff;}
+.demo-section .section-sub{color:rgba(255,255,255,.7);margin-bottom:40px;}
+.demo-wrapper{position:relative;z-index:1;}
+.water-viewport{position:relative;width:100%;aspect-ratio:16/9;min-height:480px;border-radius:24px;overflow:hidden;background:#05101F;border:1px solid rgba(255,255,255,.08);box-shadow:0 32px 80px rgba(0,0,0,.5);}
+.water-viewport svg{width:100%;height:100%;display:block;}
+.water-overlay{position:absolute;left:0;right:0;padding:20px 24px;pointer-events:none;display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;}
+.water-overlay-top{top:0;}
+.water-overlay-bottom{bottom:0;align-items:flex-end;}
+.water-status{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:100px;background:rgba(10,26,47,.75);backdrop-filter:blur(12px);border:1px solid rgba(72,202,228,.3);color:#fff;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;}
+.water-status .dot{width:8px;height:8px;border-radius:50%;background:#48CAE4;box-shadow:0 0 0 0 rgba(72,202,228,.7);animation:dtPulse 2s infinite;}
+@keyframes dtPulse{0%{box-shadow:0 0 0 0 rgba(72,202,228,.7);}70%{box-shadow:0 0 0 10px rgba(72,202,228,0);}100%{box-shadow:0 0 0 0 rgba(72,202,228,0);}}
+.water-stats{display:flex;gap:20px;padding:10px 16px;background:rgba(10,26,47,.75);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.08);border-radius:14px;flex-wrap:wrap;}
+.water-stats>div{display:flex;flex-direction:column;}
+.water-stats span{font-size:10px;letter-spacing:1.5px;color:rgba(255,255,255,.55);text-transform:uppercase;font-weight:600;}
+.water-stats strong{font-size:15px;font-weight:900;color:#fff;letter-spacing:-.3px;}
+.water-controls{display:flex;gap:8px;flex-wrap:wrap;padding:8px;background:rgba(10,26,47,.75);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.08);border-radius:100px;pointer-events:auto;}
+.water-controls button{padding:8px 16px;border-radius:100px;font-family:inherit;font-size:12px;font-weight:600;letter-spacing:.5px;cursor:pointer;background:transparent;color:rgba(255,255,255,.75);border:none;transition:all .2s;}
+.water-controls button:hover{color:#fff;background:rgba(255,255,255,.08);}
+.water-controls button.active{background:var(--cyan);color:var(--dark);box-shadow:0 4px 12px rgba(0,180,216,.4);}
+.water-legend{display:flex;gap:16px;padding:10px 16px;background:rgba(10,26,47,.75);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.08);border-radius:100px;}
+.water-legend span{display:inline-flex;align-items:center;gap:8px;font-size:11px;color:rgba(255,255,255,.75);letter-spacing:.5px;font-weight:600;}
+.water-legend i{width:10px;height:10px;border-radius:2px;display:inline-block;}
+.water-legend .dot-blue{background:#48CAE4;}
+.water-legend .dot-orange{background:#FCA311;}
+.water-legend .dot-white{background:#E5EDF5;}
+.demo-hint{margin-top:16px;text-align:center;font-size:13px;color:rgba(255,255,255,.5);letter-spacing:.5px;}
+/* Pipeline */
+.pipeline{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px;}
+.pipeline-step{position:relative;padding:32px 28px;background:#fff;border:1px solid var(--line);border-radius:20px;transition:transform .3s,box-shadow .3s,border-color .3s;}
+.pipeline-step:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:var(--cyan);}
+.pipeline-step .num{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff;font-weight:900;font-size:16px;margin-bottom:20px;}
+.pipeline-step h3{font-size:17px;font-weight:800;color:var(--navy);margin-bottom:10px;letter-spacing:-.2px;}
+.pipeline-step p{font-size:14px;color:var(--grey);line-height:1.6;}
+/* Capabilities */
+.cap-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;}
+.cap-card{padding:36px 32px;background:#fff;border:1px solid var(--line);border-radius:20px;transition:transform .3s,box-shadow .3s;position:relative;overflow:hidden;}
+.cap-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--blue),var(--cyan));transform:scaleX(0);transform-origin:left;transition:transform .4s;}
+.cap-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);}
+.cap-card:hover::before{transform:scaleX(1);}
+.cap-icon{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--blue),var(--cyan));display:flex;align-items:center;justify-content:center;margin-bottom:22px;box-shadow:0 8px 20px rgba(0,119,182,.25);}
+.cap-icon svg{width:26px;height:26px;fill:#fff;}
+.cap-card h3{font-size:19px;font-weight:800;color:var(--navy);margin-bottom:10px;letter-spacing:-.2px;}
+.cap-card p{font-size:14px;color:var(--grey);line-height:1.6;}
+/* Cases */
+.dt-cases{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:24px;}
+.dt-case{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;transition:transform .3s,box-shadow .3s;display:flex;flex-direction:column;}
+.dt-case:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);}
+.dt-case-visual{height:200px;position:relative;overflow:hidden;background:linear-gradient(135deg,#0A2540,#0077B6);display:flex;align-items:center;justify-content:center;}
+.dt-case-visual.v2{background:linear-gradient(135deg,#0077B6,#00B4D8);}
+.dt-case-visual.v3{background:linear-gradient(135deg,#023E8A,#FCA311);}
+.dt-case-visual::before{content:'';position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);background-size:24px 24px;}
+.dt-case-visual svg{position:relative;width:72px;height:72px;fill:#fff;opacity:.85;}
+.dt-case-body{padding:28px;flex:1;display:flex;flex-direction:column;}
+.dt-case-tag{display:inline-block;align-self:flex-start;font-size:11px;font-weight:700;letter-spacing:1.5px;padding:4px 10px;border-radius:100px;background:var(--bg);color:var(--blue);text-transform:uppercase;margin-bottom:14px;}
+.dt-case-body h3{font-size:18px;font-weight:800;color:var(--navy);margin-bottom:10px;letter-spacing:-.2px;}
+.dt-case-body p{font-size:14px;color:var(--grey);line-height:1.6;margin-bottom:20px;flex:1;}
+.dt-case-metrics{display:flex;gap:24px;padding-top:20px;border-top:1px solid var(--line);}
+.dt-case-metrics .val{font-size:20px;font-weight:900;color:var(--blue);letter-spacing:-.5px;}
+.dt-case-metrics .key{font-size:11px;color:var(--grey);letter-spacing:1px;text-transform:uppercase;font-weight:600;}
+/* FAQ */
+.faq-list{display:grid;gap:12px;max-width:900px;}
+.faq-list details{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 24px;transition:border-color .2s;}
+.faq-list details[open]{border-color:var(--cyan);}
+.faq-list summary{cursor:pointer;font-weight:700;font-size:16px;color:var(--navy);list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;}
+.faq-list summary::-webkit-details-marker{display:none;}
+.faq-list summary::after{content:'+';font-size:22px;font-weight:400;color:var(--cyan);transition:transform .2s;line-height:1;}
+.faq-list details[open] summary::after{content:'−';transform:rotate(180deg);}
+.faq-list details p{margin-top:14px;color:var(--grey);font-size:14px;line-height:1.7;}
+/* CTA */
+.cta-block{background:linear-gradient(135deg,#023E8A 0%,#0077B6 60%,#00B4D8 100%);color:#fff;border-radius:28px;padding:72px 64px;text-align:center;position:relative;overflow:hidden;max-width:1200px;margin:0 auto;}
+.cta-block::before{content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(252,163,17,.25),transparent 60%);}
+.cta-block h2{position:relative;font-size:clamp(28px,3.5vw,42px);font-weight:900;letter-spacing:-.5px;margin-bottom:16px;}
+.cta-block p{position:relative;font-size:17px;color:rgba(255,255,255,.85);max-width:620px;margin:0 auto 36px;}
+.cta-block .btns{position:relative;display:flex;gap:16px;justify-content:center;flex-wrap:wrap;}
+.cta-block .btn-primary{background:#fff;color:#023E8A;}
+.cta-block .btn-primary:hover{background:#F0F9FF;}
+/* Footer */
+footer{background:var(--dark);color:#B8C6D9;padding:72px 0 32px;margin-top:100px;}
+.footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.2fr;gap:48px;margin-bottom:48px;}
+.footer-brand .logo{color:#fff;margin-bottom:16px;font-size:22px;}
+.footer-brand p{font-size:14px;line-height:1.7;max-width:320px;color:#8FA3B8;}
+.footer-col h5{color:#fff;font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:20px;}
+.footer-col a{display:block;padding:6px 0;font-size:14px;color:#B8C6D9;transition:color .2s;}
+.footer-col a:hover{color:var(--cyan);}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:28px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:13px;color:#6B7A8F;}
+.footer-bottom .links{display:flex;gap:24px;}
+.footer-bottom a{color:#6B7A8F;transition:color .2s;}
+.footer-bottom a:hover{color:var(--cyan);}
+.mobile-menu{display:none;position:fixed;top:72px;left:0;right:0;background:#fff;border-bottom:1px solid var(--line);padding:24px 32px;z-index:99;box-shadow:0 12px 32px rgba(2,62,138,.12);}
+.mobile-menu.open{display:block;}
+.mobile-menu a{display:block;padding:14px 0;font-weight:600;color:var(--navy);border-bottom:1px solid var(--line);}
+.mobile-menu a:last-child{border-bottom:none;}
+@media (max-width:1024px){.dt-hero-inner{grid-template-columns:1fr;gap:48px;}.dt-hero-visual{max-width:540px;margin:0 auto;width:100%;}.whatis-grid{grid-template-columns:1fr;gap:48px;}.footer-grid{grid-template-columns:1fr 1fr;gap:40px;}.water-viewport{aspect-ratio:4/3;min-height:400px;}}
+@media (max-width:900px){nav.main{gap:20px;font-size:13px;}}
+@media (max-width:768px){nav.main{display:none;}.burger{display:flex;}.header-phone{display:none;}.container{padding:0 20px;}section{padding:64px 0;}.dt-hero{padding:40px 0 56px;}.dt-hero-meta{grid-template-columns:1fr;gap:20px;}.dt-hero-meta .item{display:flex;align-items:baseline;gap:12px;padding-bottom:16px;border-bottom:1px solid var(--line);}.cta-block{padding:48px 28px;margin:0 20px;}.footer-grid{grid-template-columns:1fr;}.footer-bottom{flex-direction:column;}.water-overlay{padding:12px;}.water-stats{gap:12px;padding:8px 12px;}.water-stats strong{font-size:13px;}.water-controls button{padding:6px 12px;font-size:11px;}.water-legend{display:none;}.demo-section{padding:48px 0 64px;}}
+</style>
+</head>
+<body>
+
+<header id="header">
+  <div class="header-inner">
+    <a href="index.html" class="logo">
+      <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs><linearGradient id="hG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#48CAE4"/><stop offset="100%" stop-color="#0077B6"/></linearGradient></defs>
+        <circle cx="100" cy="85" r="42" fill="none" stroke="url(#hG)" stroke-width="10" stroke-dasharray="10 7"/>
+        <circle cx="100" cy="85" r="24" fill="url(#hG)"/>
+        <circle cx="100" cy="85" r="10" fill="#F0F9FF"/>
+        <rect x="94" y="115" width="12" height="35" fill="#023E8A"/>
+        <rect x="90" y="107" width="20" height="10" fill="#0077B6" rx="2"/>
+        <circle cx="100" cy="112" r="3" fill="#FCA311"/>
+        <line x1="100" y1="85" x2="35" y2="85" stroke="#FCA311" stroke-width="1.5" stroke-dasharray="3 3"/>
+        <line x1="100" y1="85" x2="165" y2="85" stroke="#FCA311" stroke-width="1.5" stroke-dasharray="3 3"/>
+        <circle cx="35" cy="85" r="4" fill="#FCA311"/>
+        <circle cx="165" cy="85" r="4" fill="#FCA311"/>
+        <path d="M35 152 Q50 142 65 152 T95 152 T125 152 T155 152 T165 152" fill="none" stroke="#023E8A" stroke-width="5" stroke-linecap="round"/>
+        <path d="M35 166 Q50 156 65 166 T95 166 T125 166 T155 166 T165 166" fill="none" stroke="#023E8A" stroke-width="5" stroke-linecap="round" opacity="0.75"/>
+        <path d="M35 180 Q50 170 65 180 T95 180 T125 180 T155 180 T165 180" fill="none" stroke="#023E8A" stroke-width="5" stroke-linecap="round" opacity="0.5"/>
+      </svg>
+      ОСВОД
+    </a>
+    <nav class="main">
+      <a href="index.html#services" class="active">Решения</a>
+      <a href="index.html#solutions">Отрасли</a>
+      <a href="index.html#platform">Платформа</a>
+      <a href="index.html#cases">Кейсы</a>
+      <a href="offices.html">Офис</a>
+      <a href="index.html#team">Команда</a>
+      <a href="index.html#contact">Контакты</a>
+    </nav>
+    <div class="header-cta">
+      <span class="header-phone"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.36 11.36 0 003.57.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.57 1 1 0 01-.25 1.01l-2.2 2.21z"/></svg>+7 (999) 000-00-00</span>
+      <button class="btn btn-primary" onclick="document.getElementById('contact').scrollIntoView()">Запросить демо</button>
+      <button class="burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html#services">Решения</a>
+  <a href="index.html#solutions">Отрасли</a>
+  <a href="index.html#platform">Платформа</a>
+  <a href="index.html#cases">Кейсы</a>
+  <a href="offices.html">Офис</a>
+  <a href="index.html#team">Команда</a>
+  <a href="index.html#contact">Контакты</a>
+</div>
+
+<div class="breadcrumbs">
+  <div class="breadcrumbs-inner">
+    <a href="index.html">Главная</a>
+    <span class="sep">/</span>
+    <a href="index.html#services">Решения</a>
+    <span class="sep">/</span>
+    <span class="current">Мониторинг и спасение на воде</span>
+  </div>
+</div>
+
+<section class="dt-hero">
+  <div class="dt-hero-inner">
+    <div>
+      <span class="eyebrow">Решение · Water Safety</span>
+      <h1>Мониторинг и спасение<br><span class="accent">на воде</span></h1>
+      <p class="lead">Автономные катера и спасательные роботы для круглосуточного патрулирования акватории, поиска и спасения людей, экологического контроля и охраны портовой зоны.</p>
+      <div class="dt-hero-cta">
+        <a href="#demo" class="btn btn-primary">Открыть демо</a>
+        <a href="#contact" class="btn btn-outline">Запросить пилот</a>
+      </div>
+      <div class="dt-hero-meta">
+        <div class="item"><div class="num">24/7</div><div class="label">Патрулирование</div></div>
+        <div class="item"><div class="num">&lt;30<span>сек</span></div><div class="label">Время реакции</div></div>
+        <div class="item"><div class="num">3<span>+</span></div><div class="label">Типа платформ</div></div>
+      </div>
+    </div>
+    <div class="dt-hero-visual">
+      <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="boatG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#48CAE4"/><stop offset="100%" stop-color="#0077B6"/></linearGradient>
+          <radialGradient id="glowG"><stop offset="0%" stop-color="#FCA311" stop-opacity=".5"/><stop offset="100%" stop-color="#FCA311" stop-opacity="0"/></radialGradient>
+        </defs>
+        <circle cx="250" cy="250" r="180" fill="none" stroke="rgba(72,202,228,.2)" stroke-width="1" stroke-dasharray="4 8"/>
+        <circle cx="250" cy="250" r="120" fill="none" stroke="rgba(72,202,228,.15)" stroke-width="1" stroke-dasharray="3 6"/>
+        <circle cx="250" cy="250" r="60" fill="none" stroke="rgba(72,202,228,.25)" stroke-width="1.5"/>
+        <circle cx="250" cy="250" r="8" fill="#FCA311"/>
+        <circle cx="250" cy="250" r="30" fill="url(#glowG)"/>
+        <g stroke="#48CAE4" stroke-width="2" fill="none">
+          <path d="M140 180 Q200 160 250 180 T360 180" opacity=".6"/>
+          <path d="M120 220 Q190 200 250 220 T380 220" opacity=".5"/>
+          <path d="M130 260 Q200 240 250 260 T370 260" opacity=".7"/>
+          <path d="M140 300 Q200 280 250 300 T360 300" opacity=".5"/>
+          <path d="M120 340 Q190 320 250 340 T380 340" opacity=".4"/>
+        </g>
+        <g>
+          <animateMotion dur="12s" repeatCount="indefinite" rotate="auto" path="M100 350 Q200 300 300 250 T420 180"/>
+          <g transform="translate(0,-4)">
+            <path d="M-14 -6 L16 -6 L20 3 L-18 3 Z" fill="#fff"/>
+            <rect x="-8" y="-14" width="16" height="8" fill="#48CAE4"/>
+            <circle cx="-2" cy="0" r="1.5" fill="#023E8A"/>
+            <circle cx="6" cy="0" r="1.5" fill="#023E8A"/>
+          </g>
+        </g>
+        <g>
+          <animateMotion dur="16s" repeatCount="indefinite" rotate="auto" path="M400 120 Q300 200 200 280 T80 400"/>
+          <g transform="translate(0,-4)">
+            <path d="M-12 -5 L14 -5 L18 2 L-16 2 Z" fill="#FCA311"/>
+            <rect x="-6" y="-12" width="14" height="7" fill="#fff"/>
+            <circle cx="-1" cy="0" r="1" fill="#023E8A"/>
+            <circle cx="5" cy="0" r="1" fill="#023E8A"/>
+          </g>
+        </g>
+        <text x="250" y="470" text-anchor="middle" font-family="Montserrat, sans-serif" font-weight="800" font-size="12" fill="rgba(255,255,255,.7)" letter-spacing="4">WATER SAFETY</text>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section id="whatis">
+  <div class="container">
+    <div class="whatis-grid">
+      <div class="whatis-content">
+        <span class="eyebrow">Что это</span>
+        <h2 class="section-title">Автономные системы<br>для безопасности акватории</h2>
+        <p>Мы объединяем беспилотные катера (USV), спасательные роботы и наземные пункты управления в единую систему мониторинга и реагирования. Платформы работают автономно или в связке с оператором, патрулируя заданные зоны, распознавая цели и передавая данные в реальном времени.</p>
+        <p>Система покрывает всю акваторию порта: от внутренних вод до подходных каналов. Спасательные роботы способны доставить круг или буксировать пострадавшего, а патрульные катера — вести наблюдение, фиксировать нарушения и координировать действия служб.</p>
+        <div class="whatis-points">
+          <div class="whatis-point"><div class="num">01</div><div><h4>Круглосуточное патрулирование</h4><p>Автономные маршруты днём и ночью, в туман и при волнении</p></div></div>
+          <div class="whatis-point"><div class="num">02</div><div><h4>AI-распознавание целей</h4><p>Обнаружение людей, судов, разливов и нарушителей в реальном времени</p></div></div>
+          <div class="whatis-point"><div class="num">03</div><div><h4>Спасательные операции</h4><p>Роботы-буи, доставка кругов и буксировка пострадавших</p></div></div>
+          <div class="whatis-point"><div class="num">04</div><div><h4>Экологический контроль</h4><p>Мониторинг качества воды, разливов нефти, мусора и температуры</p></div></div>
+        </div>
+      </div>
+      <div style="position:relative;aspect-ratio:1;border-radius:24px;background:linear-gradient(160deg,#023E8A,#0077B6);overflow:hidden;display:flex;align-items:center;justify-content:center">
+        <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" style="position:relative;width:80%;height:auto;filter:drop-shadow(0 20px 40px rgba(0,0,0,.35))">
+          <g fill="none" stroke="#fff" stroke-width="2">
+            <path d="M40 300 Q120 260 200 300 T360 300" stroke="#48CAE4" stroke-width="3"/>
+            <path d="M40 330 Q120 290 200 330 T360 330" stroke="#48CAE4" stroke-width="2" opacity=".6"/>
+            <rect x="140" y="180" width="120" height="60" rx="8" fill="rgba(255,255,255,.1)" stroke="rgba(255,255,255,.4)"/>
+            <circle cx="170" cy="210" r="10" fill="rgba(255,255,255,.2)"/>
+            <circle cx="230" cy="210" r="10" fill="rgba(255,255,255,.2)"/>
+            <line x1="200" y1="150" x2="200" y2="180" stroke="#FCA311" stroke-width="3"/>
+            <circle cx="200" cy="145" r="8" fill="#FCA311"/>
+            <path d="M160 120 L200 90 L240 120" stroke="#fff" stroke-width="2" fill="none"/>
+            <circle cx="200" cy="90" r="6" fill="#48CAE4"/>
+          </g>
+          <circle cx="200" cy="210" r="4" fill="#FCA311"/>
+          <circle cx="170" cy="210" r="4" fill="#48CAE4"/>
+          <circle cx="230" cy="210" r="4" fill="#48CAE4"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="demo" class="demo-section">
+  <div class="container demo-wrapper">
+    <span class="eyebrow">Live Demo</span>
+    <h2 class="section-title">Интерактивная карта мониторинга</h2>
+    <p class="section-sub">Наблюдайте за работой автономных катеров и спасательных роботов в реальном времени. Переключайте режимы, следите за целями и зонами патрулирования.</p>
+    <div class="water-viewport">
+      <svg viewBox="0 0 900 500" xmlns="http://www.w3.org/2000/svg" aria-label="Карта акватории с автономными катерами">
+        <defs>
+          <linearGradient id="waterG" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0A2540"/><stop offset="100%" stop-color="#023E8A"/></linearGradient>
+          <radialGradient id="sonarG"><stop offset="0%" stop-color="#48CAE4" stop-opacity=".3"/><stop offset="100%" stop-color="#48CAE4" stop-opacity="0"/></radialGradient>
+          <pattern id="gridW" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M60 0 H0 V60" fill="none" stroke="rgba(72,202,228,.08)" stroke-width="1"/></pattern>
+        </defs>
+        <rect width="900" height="500" fill="url(#waterG)"/>
+        <rect width="900" height="500" fill="url(#gridW)"/>
+        <!-- Береговая линия -->
+        <path d="M0 80 Q150 60 250 90 Q400 120 500 80 Q650 50 800 90 Q850 100 900 90 L900 0 L0 0 Z" fill="rgba(10,26,47,.6)" stroke="rgba(72,202,228,.2)" stroke-width="1"/>
+        <!-- Причалы -->
+        <g stroke="rgba(255,255,255,.3)" stroke-width="2" fill="none">
+          <line x1="100" y1="120" x2="100" y2="180"/><line x1="80" y1="180" x2="120" y2="180"/>
+          <line x1="300" y1="110" x2="300" y2="170"/><line x1="280" y1="170" x2="320" y2="170"/>
+          <line x1="600" y1="100" x2="600" y2="160"/><line x1="580" y1="160" x2="620" y2="160"/>
+        </g>
+        <!-- Зоны патрулирования -->
+        <circle cx="250" cy="300" r="120" fill="rgba(72,202,228,.04)" stroke="rgba(72,202,228,.3)" stroke-width="1" stroke-dasharray="4 6"/>
+        <circle cx="650" cy="280" r="100" fill="rgba(252,163,17,.03)" stroke="rgba(252,163,17,.25)" stroke-width="1" stroke-dasharray="4 6"/>
+        <!-- Сонар -->
+        <circle cx="450" cy="250" r="180" fill="none" stroke="rgba(72,202,228,.15)" stroke-width="1"><animate attributeName="r" values="60;200" dur="4s" repeatCount="indefinite"/><animate attributeName="opacity" values=".4;0" dur="4s" repeatCount="indefinite"/></circle>
+        <!-- USV 1 - патрульный -->
+        <g><animateMotion dur="20s" repeatCount="indefinite" rotate="auto" path="M120 400 Q250 320 400 350 T700 300 Q800 280 850 200"/><g transform="translate(0,-5)"><path d="M-16 -6 L18 -6 L22 3 L-20 3 Z" fill="#48CAE4"/><rect x="-10" y="-14" width="18" height="8" fill="#fff"/><circle cx="-2" cy="0" r="1.5" fill="#023E8A"/><circle cx="8" cy="0" r="1.5" fill="#023E8A"/></g></g>
+        <!-- USV 2 - спасательный -->
+        <g><animateMotion dur="24s" repeatCount="indefinite" rotate="auto" path="M800 400 Q650 350 500 380 T200 350 Q100 330 50 250"/><g transform="translate(0,-5)"><path d="M-12 -5 L14 -5 L18 2 L-16 2 Z" fill="#FCA311"/><rect x="-6" y="-12" width="14" height="7" fill="#fff"/><circle cx="-1" cy="0" r="1" fill="#023E8A"/><circle cx="5" cy="0" r="1" fill="#023E8A"/></g></g>
+        <!-- Спасательный робот -->
+        <g><animateMotion dur="10s" repeatCount="indefinite" path="M400 250 Q450 200 500 250 T600 250"/><circle cx="0" cy="0" r="10" fill="#FCA311" opacity=".7"><animate attributeName="r" values="8;14;8" dur="1.5s" repeatCount="indefinite"/></circle><circle cx="0" cy="0" r="5" fill="#fff"/></g>
+        <!-- Цель -->
+        <g transform="translate(680,220)"><circle r="6" fill="#ff6b6b"><animate attributeName="r" values="5;8;5" dur="1s" repeatCount="indefinite"/></circle><text x="12" y="5" font-family="Montserrat, sans-serif" font-size="11" fill="#ff6b6b" font-weight="700">ЦЕЛЬ</text></g>
+        <!-- Точка оператора -->
+        <g transform="translate(450,250)"><circle r="20" fill="none" stroke="#48CAE4" stroke-width="1.5" opacity=".5"><animate attributeName="r" values="12;28;12" dur="2s" repeatCount="indefinite"/></circle><circle r="6" fill="#48CAE4"/></g>
+      </svg>
+      <div class="water-overlay water-overlay-top">
+        <div class="water-status"><span class="dot"></span>LIVE · мониторинг</div>
+        <div class="water-stats">
+          <div><span>Катеров</span><strong>2</strong></div>
+          <div><span>Роботов</span><strong>1</strong></div>
+          <div><span>Целей</span><strong id="targetCount">1</strong></div>
+          <div><span>Зон</span><strong>2</strong></div>
+        </div>
+      </div>
+      <div class="water-overlay water-overlay-bottom">
+        <div class="water-controls">
+          <button class="active">Патруль</button>
+          <button>Спасение</button>
+          <button>Мониторинг</button>
+        </div>
+        <div class="water-legend">
+          <span><i class="dot-blue"></i> Патрульный USV</span>
+          <span><i class="dot-orange"></i> Спасательный USV</span>
+          <span><i class="dot-white"></i> Робот-буй</span>
+        </div>
+      </div>
+    </div>
+    <p class="demo-hint">🖱 Наблюдайте за перемещением платформ · переключайте режимы · цели появляются автоматически</p>
+  </div>
+</section>
+
+<section id="how">
+  <div class="container">
+    <span class="eyebrow">Как это работает</span>
+    <h2 class="section-title">Четыре шага<br>к безопасной акватории</h2>
+    <p class="section-sub">От развёртывания платформ до интеграции с диспетчерской порта — 4–6 недель.</p>
+    <div class="pipeline">
+      <div class="pipeline-step"><div class="num">01</div><h3>Развёртывание</h3><p>Доставка USV и спасательных роботов на акваторию. Настройка базовой станции и зон патрулирования.</p></div>
+      <div class="pipeline-step"><div class="num">02</div><h3>Интеграция</h3><p>Подключение к TOS, AIS и системам видеонаблюдения порта. Настройка протоколов оповещения.</p></div>
+      <div class="pipeline-step"><div class="num">03</div><h3>Автономная работа</h3><p>Платформы патрулируют по маршрутам, распознают цели и передают данные оператору.</p></div>
+      <div class="pipeline-step"><div class="num">04</div><h3>Реагирование</h3><p>При обнаружении цели — автоматический перехват, спасение или передача координат службам.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="capabilities" class="alt">
+  <div class="container">
+    <span class="eyebrow">Возможности</span>
+    <h2 class="section-title">Что умеет система</h2>
+    <p class="section-sub">Шесть ключевых сценариев для портов, акваторий и внутренних вод.</p>
+    <div class="cap-grid">
+      <div class="cap-card"><div class="cap-icon"><svg viewBox="0 0 24 24"><path d="M12 2C8 2 4 6 4 10c0 5 8 12 8 12s8-7 8-12c0-4-4-8-8-8z"/></svg></div><h3>Патрулирование акватории</h3><p>Автономные маршруты днём и ночью. Контроль судоходства, охрана периметра, обнаружение нарушителей.</p></div>
+      <div class="cap-card"><div class="cap-icon"><svg viewBox="0 0 24 24"><path d="M12 1l3 6h6l-5 4 2 7-6-4-6 4 2-7-5-4h6z"/></svg></div><h3>Поиск и спасение</h3><p>Роботы-буи, доставка спасательных кругов, буксировка пострадавших. Реакция менее 30 секунд.</p></div>
+      <div class="cap-card"><div class="cap-icon"><svg viewBox="0 0 24 24"><path d="M4 4h16v2H4V4zm0 4h16v2H4V8zm0 4h10v2H4v-2zm0 4h16v2H4v-2z"/></svg></div><h3>Экологический мониторинг</h3><p>Контроль качества воды, обнаружение разливов нефти, замеры температуры и солёности.</p></div>
+      <div class="cap-card"><div class="cap-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2z"/></svg></div><h3>Видеонаблюдение 360°</h3><p>Стабилизированные камеры, ИК-подсветка, запись доказательств в высоком качестве.</p></div>
+      <div class="cap-card"><div class="cap-icon"><svg viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24 11.36 11.36 0 003.57.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.36 11.36 0 00.57 3.57 1 1 0 01-.25 1.01l-2.2 2.21z"/></svg></div><h3>AI-распознавание</h3><p>Обнаружение людей, судов, мусора и разливов. Автоматическое сопровождение цели.</p></div>
+      <div class="cap-card"><div class="cap-icon"><svg viewBox="0 0 24 24"><path d="M12 2l9 4.9V17L12 22l-9-4.9V6.9L12 2z"/></svg></div><h3>Единый центр управления</h3><p>Все платформы на одной карте. Оператор видит телеметрию, видео и статус каждой единицы.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="cases">
+  <div class="container">
+    <span class="eyebrow">Кейсы</span>
+    <h2 class="section-title">Три проекта,<br>которые уже работают</h2>
+    <p class="section-sub">Результаты от внедрения систем мониторинга и спасения на воде.</p>
+    <div class="dt-cases">
+      <div class="dt-case">
+        <div class="dt-case-visual"><svg viewBox="0 0 24 24"><path d="M12 2C8 2 4 6 4 10c0 5 8 12 8 12s8-7 8-12c0-4-4-8-8-8z"/></svg></div>
+        <div class="dt-case-body">
+          <span class="dt-case-tag">Порт · Гданьск</span>
+          <h3>Круглосуточная охрана акватории</h3>
+          <p>Развёрнуты 2 патрульных USV и 4 спасательных робота. Система интегрирована с TOS и службой безопасности порта.</p>
+          <div class="dt-case-metrics"><div><div class="val">-80%</div><div class="key">Инцидентов</div></div><div><div class="val">24/7</div><div class="key">Покрытие</div></div></div>
+        </div>
+      </div>
+      <div class="dt-case">
+        <div class="dt-case-visual v2"><svg viewBox="0 0 24 24"><path d="M12 1l3 6h6l-5 4 2 7-6-4-6 4 2-7-5-4h6z"/></svg></div>
+        <div class="dt-case-body">
+          <span class="dt-case-tag">Внутренние воды · Роттердам</span>
+          <h3>Спасение на воде за 28 секунд</h3>
+          <p>Спасательный робот доставил круг утопающему до прибытия катера. Время реакции — менее 30 секунд.</p>
+          <div class="dt-case-metrics"><div><div class="val">28 сек</div><div class="key">Реакция</div></div><div><div class="val">100%</div><div class="key">Успешных</div></div></div>
+        </div>
+      </div>
+      <div class="dt-case">
+        <div class="dt-case-visual v3"><svg viewBox="0 0 24 24"><path d="M4 4h16v2H4V4zm0 4h16v2H4V8zm0 4h10v2H4v-2zm0 4h16v2H4v-2z"/></svg></div>
+        <div class="dt-case-body">
+          <span class="dt-case-tag">Экологический контроль · Балтика</span>
+          <h3>Мониторинг разливов нефти</h3>
+          <p>USV с датчиками качества воды ежедневно обследует акваторию. Обнаружение разлива — автоматическое оповещение.</p>
+          <div class="dt-case-metrics"><div><div class="val">0</div><div class="key">Пропущено</div></div><div><div class="val">365</div><div class="key">Дней в году</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="container">
+    <span class="eyebrow">FAQ</span>
+    <h2 class="section-title">Частые вопросы</h2>
+    <p class="section-sub">Если не нашли ответ — напишите нам.</p>
+    <div class="faq-list">
+      <details open><summary>Какие платформы входят в систему?</summary><p>Патрульные USV (до 35 узлов, 220 морских миль), спасательные роботы-буи (до 1000 кг буксировки), многофункциональные катера для мониторинга. Все платформы работают автономно или под управлением оператора.</p></details>
+      <details><summary>Работает ли система ночью и в плохую погоду?</summary><p>Да. Платформы оснащены ИК-камерами, радарами и LiDAR, что обеспечивает работу в темноте, тумане и при волнении до 3 баллов.</p></details>
+      <details><summary>Сколько времени занимает развёртывание?</summary><p>Базовая станция и первые платформы — 1 неделя. Полная интеграция с портовыми системами — 4–6 недель.</p></details>
+      <details><summary>Можно ли интегрировать с нашей TOS?</summary><p>Да, у нас готовые коннекторы к Navis N4, TBA и большинству кастомных TOS через REST API и Kafka.</p></details>
+      <details><summary>Что с безопасностью данных?</summary><p>Система развёртывается в вашем ЦОД или в изолированном облаке. Соответствие IEC 62443, ISO 27001, NIS2.</p></details>
+      <details><summary>Есть ли сертификация для работы в порту?</summary><p>Да, платформы сертифицированы для работы в акватории порта и согласованы с портовыми властями Гданьска и Роттердама.</p></details>
+    </div>
+  </div>
+</section>
+
+<div class="cta-block" id="contact">
+  <h2>Готовы защитить акваторию?</h2>
+  <p>Покажем демо на вашем объекте или организуем пилот на одной акватории. Ответим в течение 24 часов.</p>
+  <div class="btns">
+    <a href="mailto:watersafety@osvod.ru" class="btn btn-primary">watersafety@osvod.ru</a>
+    <a href="tel:+79990000000" class="btn btn-ghost">+7 (999) 000-00-00</a>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo" style="color:#fff;">
+          <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="36" height="36">
+            <defs><linearGradient id="fG" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#48CAE4"/><stop offset="100%" stop-color="#0077B6"/></linearGradient></defs>
+            <circle cx="100" cy="85" r="42" fill="none" stroke="url(#fG)" stroke-width="10" stroke-dasharray="10 7"/>
+            <circle cx="100" cy="85" r="24" fill="url(#fG)"/>
+            <circle cx="100" cy="85" r="10" fill="#0A2540"/>
+            <rect x="94" y="115" width="12" height="35" fill="#fff"/>
+            <path d="M35 152 Q50 142 65 152 T95 152 T125 152 T155 152 T165 152" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+            <path d="M35 166 Q50 156 65 166 T95 166 T125 166 T155 166 T165 166" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity="0.75"/>
+            <path d="M35 180 Q50 170 65 180 T95 180 T125 180 T155 180 T165 180" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity="0.5"/>
+          </svg>
+          ОСВОД
+        </div>
+        <p>Управляем портом в реальном времени. Автоматизация морских причалов и портовой инфраструктуры с 2018 года.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Решения</h5>
+        <a href="index.html#services">Terminal Operating System</a>
+        <a href="index.html#services">IoT-мониторинг</a>
+        <a href="index.html#services">Port Community System</a>
+        <a href="digital-twin.html">Цифровой двойник порта</a>
+        <a href="index.html#services">ESG-отчётность</a>
+        <a href="water-rescue.html">Мониторинг и спасение на воде</a>
+      </div>
+      <div class="footer-col">
+        <h5>Компания</h5>
+        <a href="index.html#team">Команда</a>
+        <a href="offices.html">Офис</a>
+        <a href="index.html#cases">Кейсы</a>
+        <a href="index.html#contact">Контакты</a>
+        <a href="#">Вакансии</a>
+      </div>
+      <div class="footer-col">
+        <h5>Контакты</h5>
+        <a href="mailto:watersafety@osvod.ru">watersafety@osvod.ru</a>
+        <a href="mailto:info@osvod.ru">info@osvod.ru</a>
+        <a href="tel:+79990000000">+7 (999) 000-00-00</a>
+        <a href="#">ул. Портовая, 1, офис 400</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© ОСВОД, 2026. Все права защищены.</div>
+      <div class="links">
+        <a href="#">Политика конфиденциальности</a>
+        <a href="#">Cookies</a>
+        <a href="brandbook.html">Брендбук</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 20));
+  const burger = document.getElementById('burger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  burger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.style.opacity = '1'; entry.target.style.transform = 'translateY(0)'; }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.whatis-point, .pipeline-step, .cap-card, .dt-case, .faq-list details').forEach(el => {
+    el.style.opacity = '0'; el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity .5s ease, transform .5s ease';
+    observer.observe(el);
+  });
+  // Счётчик целей (для реалистичности)
+  const targetEl = document.getElementById('targetCount');
+  if (targetEl) {
+    setInterval(() => {
+      targetEl.textContent = Math.floor(Math.random() * 3) + 1;
+    }, 4000);
+  }
+</script>
+
+</body>
+</html>
